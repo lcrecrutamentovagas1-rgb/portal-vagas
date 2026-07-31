@@ -27,7 +27,7 @@ export default function BuscaVagas({
   return (
     <form
       onSubmit={buscar}
-      className={`flex flex-col gap-2 rounded-xl border border-slate-300 bg-white p-2 shadow-sm sm:flex-row ${
+      className={`flex flex-col gap-2 rounded-2xl bg-white p-2 shadow-xl sm:flex-row ${
         grande ? "sm:p-2.5" : ""
       }`}
     >
@@ -40,7 +40,7 @@ export default function BuscaVagas({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Cargo, palavra-chave ou empresa"
-          className="w-full bg-transparent py-2.5 text-[15px] outline-none placeholder:text-slate-400"
+          className="w-full bg-transparent py-2.5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
         />
       </label>
 
@@ -55,12 +55,12 @@ export default function BuscaVagas({
           value={local}
           onChange={(e) => setLocal(e.target.value)}
           placeholder="Cidade, estado ou remoto"
-          className="w-full bg-transparent py-2.5 text-[15px] outline-none placeholder:text-slate-400"
+          className="w-full bg-transparent py-2.5 text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
         />
       </label>
 
       <button type="submit" className="btn-primario shrink-0 sm:px-8">
-        Buscar vagas
+        Encontrar vagas
       </button>
     </form>
   );

@@ -67,6 +67,33 @@ export const AREAS = [
   "Outros",
 ];
 
+
+/**
+ * Ícone e cor de cada área — usados nos cartões de "Vagas por setor".
+ * As cores seguem a paleta da logo.
+ */
+export const ICONES_AREA: Record<string, { icone: string; cor: string }> = {
+  "Administração": { icone: "📋", cor: "from-blue-500 to-blue-600" },
+  "Atendimento ao cliente": { icone: "🎧", cor: "from-sky-400 to-blue-500" },
+  "Comercial / Vendas": { icone: "🛒", cor: "from-orange-400 to-orange-600" },
+  "Construção civil": { icone: "🏗️", cor: "from-amber-500 to-orange-600" },
+  "Educação": { icone: "📚", cor: "from-violet-500 to-purple-600" },
+  "Financeiro / Contábil": { icone: "💰", cor: "from-emerald-500 to-teal-600" },
+  "Jurídico": { icone: "⚖️", cor: "from-slate-500 to-slate-700" },
+  "Logística / Transporte": { icone: "🚚", cor: "from-cyan-500 to-blue-600" },
+  "Marketing": { icone: "📢", cor: "from-pink-500 to-rose-600" },
+  "Produção / Indústria": { icone: "⚙️", cor: "from-zinc-500 to-slate-700" },
+  "Recursos Humanos": { icone: "👥", cor: "from-fuchsia-500 to-purple-600" },
+  "Saúde": { icone: "🏥", cor: "from-red-400 to-pink-600" },
+  "Serviços gerais": { icone: "🧰", cor: "from-teal-500 to-cyan-600" },
+  "Tecnologia da Informação": { icone: "💻", cor: "from-blue-500 to-violet-600" },
+  "Outros": { icone: "✨", cor: "from-indigo-500 to-purple-600" },
+};
+
+export function iconeDaArea(area?: string | null) {
+  return (area && ICONES_AREA[area]) || { icone: "💼", cor: "from-blue-500 to-violet-600" };
+}
+
 export const STATUS_VAGA: Record<string, { label: string; cor: string }> = {
   pendente: { label: "Aguardando aprovação", cor: "bg-amber-100 text-amber-800" },
   publicada: { label: "Publicada", cor: "bg-emerald-100 text-emerald-800" },

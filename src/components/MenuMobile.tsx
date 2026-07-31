@@ -11,13 +11,14 @@ export default function MenuMobile({
   ehAdmin: boolean;
 }) {
   const [aberto, setAberto] = useState(false);
+  const fechar = () => setAberto(false);
 
   return (
     <div className="ml-auto md:hidden">
       <button
         onClick={() => setAberto((a) => !a)}
         aria-label="Abrir menu"
-        className="grid h-10 w-10 place-items-center rounded-lg hover:bg-slate-100"
+        className="grid h-10 w-10 place-items-center rounded-lg text-white hover:bg-white/10"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           {aberto ? (
@@ -29,30 +30,30 @@ export default function MenuMobile({
       </button>
 
       {aberto && (
-        <div className="absolute left-0 right-0 top-16 border-b border-slate-200 bg-white p-4 shadow-lg">
+        <div className="absolute left-0 right-0 top-[68px] border-b border-navy-borda bg-navy p-4 shadow-xl">
           <nav className="flex flex-col gap-1">
-            <Link href="/vagas" onClick={() => setAberto(false)} className="rounded-lg px-3 py-2.5 font-medium text-slate-700 hover:bg-slate-100">
-              Buscar vagas
-            </Link>
-            <Link href="/empresas" onClick={() => setAberto(false)} className="rounded-lg px-3 py-2.5 font-medium text-slate-700 hover:bg-slate-100">
-              Empresas
-            </Link>
-            <hr className="my-2 border-slate-200" />
+            <Item href="/vagas" onClick={fechar}>Vagas</Item>
+            <Item href="/vagas-por-setor" onClick={fechar}>Setores</Item>
+            <Item href="/empresas" onClick={fechar}>Empresas</Item>
+            <Item href="/planos" onClick={fechar}>Planos</Item>
+
+            <hr className="my-2 border-navy-borda" />
+
             {logado ? (
               <>
-                <Link href={ehAdmin ? "/admin" : "/painel"} onClick={() => setAberto(false)} className="rounded-lg px-3 py-2.5 font-semibold text-marca hover:bg-marca-clara">
+                <Item href={ehAdmin ? "/admin" : "/painel"} onClick={fechar} destaque>
                   {ehAdmin ? "Administração" : "Meu painel"}
-                </Link>
-                <Link href="/api/sair" onClick={() => setAberto(false)} className="rounded-lg px-3 py-2.5 font-medium text-slate-600 hover:bg-slate-100">
-                  Sair
-                </Link>
+                </Item>
+                <Item href="/api/sair" onClick={fechar}>Sair</Item>
               </>
             ) : (
               <>
-                <Link href="/entrar" onClick={() => setAberto(false)} className="rounded-lg px-3 py-2.5 font-medium text-slate-700 hover:bg-slate-100">
-                  Entrar
-                </Link>
-                <Link href="/cadastro" onClick={() => setAberto(false)} className="rounded-lg bg-marca px-3 py-2.5 text-center font-semibold text-white">
+                <Item href="/entrar" onClick={fechar}>Entrar</Item>
+                <Link
+                  href="/cadastro"
+                  onClick={fechar}
+                  className="btn-primario mt-1 w-full"
+                >
                   Publicar vaga
                 </Link>
               </>
@@ -61,5 +62,29 @@ export default function MenuMobile({
         </div>
       )}
     </div>
+  );
+}
+
+function Item({
+  href,
+  onClick,
+  children,
+  destaque,
+}: {
+  href: string;
+  onClick: () => void;
+  children: React.ReactNode;
+  destaque?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`rounded-lg px-3 py-2.5 font-medium transition hover:bg-white/10 ${
+        destaque ? "text-azul-claro" : "text-slate-200"
+      }`}
+    >
+      {children}
+    </Link>
   );
 }

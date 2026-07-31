@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Vaga } from "@/lib/types";
+import { iconeDaArea } from "@/lib/site";
 import {
   formatarSalario,
   localDaVaga,
@@ -9,55 +10,58 @@ import {
 } from "@/lib/format";
 
 export default function CartaoVaga({ vaga }: { vaga: Vaga }) {
+  const { icone, cor } = iconeDaArea(vaga.area);
+
   return (
     <Link
       href={`/vagas/${vaga.id}`}
-      className="group block rounded-xl border border-slate-200 bg-white p-5 transition hover:border-marca hover:shadow-md"
+      className="group relative flex flex-col rounded-xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-marca hover:shadow-lg"
     >
-      <div className="flex items-start gap-4">
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-marca-clara text-lg font-bold text-marca">
-          {vaga.empresa_nome.charAt(0).toUpperCase()}
-        </div>
+      {vaga.destaque && (
+        <span
+          className="absolute -top-2 right-4 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-white shadow"
+          style={{ background: "var(--grad-quente)" }}
+        >
+          ⭐ Destaque
+        </span>
+      )}
+
+      <div className="flex items-start gap-3">
+        <span
+          className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${cor} text-lg shadow-sm`}
+        >
+          {icone}
+        </span>
 
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="text-[17px] font-semibold leading-snug text-slate-900 group-hover:text-marca">
-              {vaga.titulo}
-            </h3>
-            {vaga.destaque && (
-              <span className="shrink-0 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-800">
-                Destaque
-              </span>
-            )}
-          </div>
-
-          <p className="mt-1 text-[15px] font-medium text-slate-700">
+          <h3 className="line-clamp-2 text-[16px] font-bold leading-snug text-slate-900 group-hover:text-marca">
+            {vaga.titulo}
+          </h3>
+          <p className="mt-0.5 truncate text-sm font-medium text-slate-600">
             {vaga.empresa_nome}
           </p>
-
-          <p className="mt-0.5 flex items-center gap-1.5 text-sm text-slate-500">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            {localDaVaga(vaga)}
-          </p>
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            <span className="chip">{rotuloModalidade(vaga.modalidade)}</span>
-            <span className="chip">{rotuloContrato(vaga.tipo_contrato)}</span>
-            {vaga.nivel && <span className="chip">{vaga.nivel}</span>}
-            <span className="chip bg-emerald-50 text-emerald-800">
-              {formatarSalario(vaga)}
-            </span>
-          </div>
-
-          <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-600">
-            {vaga.descricao}
-          </p>
-
-          <p className="mt-3 text-xs text-slate-400">{tempoRelativo(vaga.criado_em)}</p>
         </div>
+      </div>
+
+      <p className="mt-3 flex items-center gap-1.5 text-sm text-slate-500">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+        <span className="truncate">{localDaVaga(vaga)}</span>
+      </p>
+
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        <span className="chip">{rotuloModalidade(vaga.modalidade)}</span>
+        <span className="chip">{rotuloContrato(vaga.tipo_contrato)}</span>
+        {vaga.nivel && <span className="chip">{vaga.nivel}</span>}
+      </div>
+
+      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+        <span className="text-sm font-bold text-emerald-600">
+          {formatarSalario(vaga)}
+        </span>
+        <span className="text-xs text-slate-400">{tempoRelativo(vaga.criado_em)}</span>
       </div>
     </Link>
   );
